@@ -11,7 +11,7 @@ services:
       - TS_SERVE_CONFIG=/config/serve.json
       - TS_USERSPACE=false
     volumes:
-      - ts_state:/var/lib/tailscale
+      - ./ts_state:/var/lib/tailscale
       - ./serve.json:/config/serve.json:ro
     devices:
       - /dev/net/tun:/dev/net/tun
@@ -23,7 +23,7 @@ services:
     image: docker.io/library/redis:7.4-alpine
     container_name: paperless-redis
     volumes:
-      - redisdata:/data
+      - ./redisdata:/data
     networks: [backend]
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
@@ -40,7 +40,7 @@ services:
       - POSTGRES_USER=paperless
       - POSTGRES_PASSWORD=${PAPERLESS_DBPASS}
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - ./pgdata:/var/lib/postgresql/data
     networks: [backend]
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U paperless -d paperless"]
@@ -106,10 +106,10 @@ services:
       - USERMAP_UID=${USERMAP_UID}
       - USERMAP_GID=${USERMAP_GID}
     volumes:
-      - data:/usr/src/paperless/data
-      - ${PAPERLESS_MEDIA_DIR}:/usr/src/paperless/media
-      - ${PAPERLESS_CONSUME_DIR}:/usr/src/paperless/consume
-      - ${PAPERLESS_EXPORT_DIR}:/usr/src/paperless/export
+      - ./data:/usr/src/paperless/data
+      - ./${PAPERLESS_MEDIA_DIR}:/usr/src/paperless/media
+      - ./${PAPERLESS_CONSUME_DIR}:/usr/src/paperless/consume
+      - ./${PAPERLESS_EXPORT_DIR}:/usr/src/paperless/export
     networks: [edge, backend]
     restart: unless-stopped
     # bewusst keine ports: — Zugriff ausschließlich über den Sidecar
