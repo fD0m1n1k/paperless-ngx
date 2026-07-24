@@ -97,7 +97,7 @@ services:
       - PAPERLESS_OCR_LANGUAGE=deu+eng
       - PAPERLESS_OCR_LANGUAGES=deu eng
       - PAPERLESS_TIME_ZONE=Europe/Vienna
-      - PAPERLESS_FILENAME_FORMAT={{created_year}}/{{correspondent}}/{{title}}
+      - PAPERLESS_FILENAME_FORMAT={{ correspondent }}/{{ created_year }}/{{ created_year }}-{{ created_month }}-{{ created_day }}_{{ title }}_{{ document_type }}
       # --- Secrets ---
       - PAPERLESS_SECRET_KEY=${PAPERLESS_SECRET_KEY}
       - PAPERLESS_ADMIN_USER=${PAPERLESS_ADMIN_USER}
